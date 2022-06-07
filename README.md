@@ -5,14 +5,23 @@
 > Tutorial and collection of tips and tricks for how to use makefile
 
 - [Install the make executable](#install-the-make-executable)
-- [Get the current directory using a shell function](#get-the-current-directory-using-a-shell-function)
-- [Getting informations from the .env file](#getting-informations-from-the-env-file)
-- [Set the default target](#set-the-default-target)
-- [Running dependant targets](#running-dependant-targets)
+- [How to write a target](#how-to-write-a-target)
+  - [Tab not space](#tab-not-space)
+  - [Don't echo the command](#dont-echo-the-command)
+- [Configure vscode](#configure-vscode)
+  - [Add the makefile extension](#add-the-makefile-extension)
+  - [Add the .editorconfig file](#add-the-editorconfig-file)
+- [Some tips](#some-tips)
+  - [Define variable like getting the current directory](#define-variable-like-getting-the-current-directory)
+  - [Getting informations from the .env file](#getting-informations-from-the-env-file)
+  - [Set the default target](#set-the-default-target)
+  - [Running dependant targets](#running-dependant-targets)
   - [Stop the job if a target fails](#stop-the-job-if-a-target-fails)
-- [Open a web browser](#open-a-web-browser)
-- [Git - Work in progress](#git---work-in-progress)
-- [Using parameters](#using-parameters)
+  - [Using parameters](#using-parameters)
+- [Some functions](#some-functions)
+  - [Open a web browser](#open-a-web-browser)
+  - [Git - Work in progress](#git---work-in-progress)
+  - [Clean folders](#clean-folders)
 - [Tutorials](#tutorials)
 
 ## Install the make executable
@@ -21,7 +30,64 @@
 sudo apt-get update && sudo apt-get -y install make
 ```
 
-## Get the current directory using a shell function
+## How to write a target
+
+### Tab not space
+
+The indentation to use when creating a `makefile` is the tabulation; not spaces. Using spaces will broke the file. 
+
+```makefile
+helloWorld:
+	echo "Hello world"
+```
+
+### Don't echo the command 
+
+Running `make helloWorld` like below will output two lines on the console.
+
+```makefile
+helloWorld:
+	echo "Hello world"
+```
+
+```text
+echo "Hello world"
+Hello world
+```
+
+To avoid the first one i.e. the output of the fired instruction, just prefix it with an arobase.
+
+```makefile
+helloWorld:
+	@echo "Hello world"
+```
+
+Now, only the output will be echoed; no more the instruction itself.
+
+
+## Configure vscode
+
+### Add the makefile extension
+
+[https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools)
+
+### Add the .editorconfig file
+
+Make sure your `Makefile` file is correctly formatted; add a file called `.editorconfig` in your root directory.
+
+```text
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+[Makefile]
+indent_style = tab
+indent_size = 4
+```
+
+## Some tips
+
+### Define variable like getting the current directory
 
 ```makefile
 PWD:=$(shell pwd)
@@ -30,7 +96,7 @@ current_dir:
 	@echo "The current directory is ${PWD}"
 ```
 
-## Getting informations from the .env file
+### Getting informations from the .env file
 
 Getting a value from a `.env` file is easy, just include it then use variables:
 
@@ -45,7 +111,11 @@ migrateinit:
 	@echo "The name of the image is ${DOCKER_IMAGE}"
 ```
 
-## Set the default target
+This `include` tip will works with any file defining a variable and his value
+
+We can perfectly have a file called `Make.config`, not `.env`
+
+### Set the default target
 
 By default, the first target defined in the file will be the default one i.e. the one fired when the user will just fire `make` on the command line.
 
@@ -56,7 +126,7 @@ bonjour:
 	@echo "Bonjour"
 ```
 
-## Running dependant targets
+### Running dependant targets
 
 By running `make php-cs-fixer`, we'll first run `vendor` then `update-them`, finally `php-cs-fixer` i.e. we can define a list of dependant targets.
 
@@ -103,25 +173,7 @@ Then update vendors
 And finally run php-cs-fixer
 ```
 
-## Open a web browser
-
-```makefile
-# Opens the default browser
-open-browser:
-	@sensible-browser http://www.google.fr
-	@echo "Le site a été démarré"
-```
-
-## Git - Work in progress
-
-```makefile
-wip:
-    git add .
-    git commit -m "wip
-    git push
-```
-
-## Using parameters
+### Using parameters
 
 Running a target with a parameter should be done using named parameters like this:
 
@@ -135,6 +187,42 @@ This will create a variable called `firstname`, we then can use it:
 bonjour:
 	@echo "Bonjour ${firstname}"
 ```
+
+## Some functions
+
+### Open a web browser
+
+```makefile
+# Opens the default browser
+open-browser:
+	@sensible-browser http://www.google.fr
+	@echo "Le site a été démarré"
+```
+
+### Git - Work in progress
+
+```makefile
+wip:
+    git add .
+    git commit -m "wip
+    git push
+```
+
+### Clean folders
+
+```makefile
+clean:
+	rm -rf .cache .output node_modules/ storage/logs/ vendor/
+```
+
+We can also test for the existence of the folder first:
+
+```makefile
+clean:
+	test ! -e vendor || rm -rf vendor
+```
+
+
 
 ## Tutorials
 
