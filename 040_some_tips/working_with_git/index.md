@@ -5,14 +5,10 @@
 Retrieve some important variables from the shell:
 
 ```makefile
-# Return the current branch like `master` or `dev` or ...
 GIT_CURRENT_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 
-# The project root directory (f.i. `~/repositories/my-project)
 GIT_ROOT_DIR:=$(shell git rev-parse --show-toplevel)
 
-# Get the URL of the project and remove the .git final extension
-# Get something like `https://xxxxx/my-project`
 GIT_URL_REPO:=$(shell git config --get remote.origin.url | sed -r 's:git@([^/]+)\:(.*\.git):https\://\1/\2:g' | grep -Po '.*(?=\.)')
 ```
 
@@ -21,13 +17,13 @@ GIT_URL_REPO:=$(shell git config --get remote.origin.url | sed -r 's:git@([^/]+)
 When variables have been initialized, we can do things like this:
 
 ```makefile
-git_open_repo: ## Start a browser and open the repository
+git_open_repo:
 	@sensible-browser ${GIT_URL_REPO}
 
-git_open_pipeline: ## Start a browser and open the repository pipelines
+git_open_pipeline:
 	@sensible-browser ${GIT_URL_REPO}/pipelines
 
-git_open_wiki: ## Start a browser and open the WIKI page of the repository
+git_open_wiki:
 	@sensible-browser ${GIT_URL_REPO}/-/wikis/home
 ```
 

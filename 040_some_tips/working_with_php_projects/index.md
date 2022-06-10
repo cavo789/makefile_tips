@@ -9,15 +9,9 @@ If no changes have been made to the `composer.json` file, nothing has to be done
 Pretty easy.
 
 ```makefile
-#! The name of the target should be `composer.lock` i.e. should be the name of the file.
-## Generate the composer.lock file as soon as the file is no more synchronized with composer.json
 composer.lock: composer.json
 	${CMD} composer update --no-interaction
 
-# Will display "make: 'vendor' is up to date." when the `composer.lock` datetime is the same as the `vendor` folder
-# i.e. when there is no need to update the `vendor` folder
-#! The name of the target should be `vendor` i.e. should be the name of the folder.
-## Make / update the `vendor` folder. Remove `composer.lock` or `vendor` to force recreating the folder.
 vendor: composer.lock
 	${CMD} composer install
 ```
