@@ -45,3 +45,16 @@ Then update vendors
 And finally run php-cs-fixer
 ```
 
+## Using shell find option to get all dependancies
+
+Imagine you've a lot of `.md` files in the directory. If one change, we'll concat them again. If nothing change, nothing to do.
+
+This can be done using a shell command for the dependancy:
+
+```makefile
+concat: $(shell find *.md -type f)
+	$(shell concat.sh)
+
+```
+
+(source [https://tech.davis-hansson.com/p/make/#specifying-inputs](https://tech.davis-hansson.com/p/make/#specifying-inputs))
