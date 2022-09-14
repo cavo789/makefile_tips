@@ -19,7 +19,7 @@ ifeq ($(QUIET),false)
 	@printf '\e[1;30m%s\n\e[m' "QUIET MODE NOT ENABLED - We'll show any informative text."
 endif
 	@printf '\e[1;32m%s\n\n\e[m' "This is an important message"
-´´´
+```
 
 The code above define a global variable `QUIET` that will be set to `true` or `false` depending on the presence of the `--quiet` keyword in `ARGS`.
 
