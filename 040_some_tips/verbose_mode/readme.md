@@ -4,15 +4,14 @@ The idea: don't show informative message when running some targets.
 
 The code below will check the presence of the `--quiet` argument / value in the `$ARGS` standard variable.
 
-```makefile
-# Sample code to demonstrate how to enable/disable verbose mode
-# in a makefile.
-#
-# Using the "--quiet" argument in ARGS.
-#
-# Verbose mode: run `make testme` on the command line
-# Silent  mode: run `make testme ARGS="--quiet"` on the command line
+Sample code to demonstrate how to enable/disable verbose mode in a makefile.
 
+Using the "--quiet" argument in ARGS.
+
+* Verbose mode: run `make testme` on the command line
+* Silent  mode: run `make testme ARGS="--quiet"` on the command line
+
+```makefile
 QUIET=$(if $(findstring --quiet,${ARGS}),true,false)
 
 testme:
