@@ -22,7 +22,7 @@ makefile:195: warning: ignoring old recipe for target 'hello'
 Nice to meet you
 ```
 
-The solution: use `::` and not a single `:` after the recipe; see the next sample:
+The solution: use `::` (this is called an *explicit rule*) and not a single `:` after the recipe; see the next sample:
 
 ```makefile
 hello::
