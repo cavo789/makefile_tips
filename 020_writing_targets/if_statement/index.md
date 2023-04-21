@@ -12,3 +12,15 @@ endif
 ```
 
 `make init SET_PHP_VERSION=7.4` will display the downgrade message while `make init SET_PHP_VERSION=8.1` the upgrade one.
+
+Another examples:
+
+```makefile
+ifneq ("$(DB_TYPE)","")
+	echo "The DB_TYPE variable is not empty
+endif
+
+ifeq ("$(DB_TYPE)","")
+	echo "The DB_TYPE variable is empty
+endif
+```
