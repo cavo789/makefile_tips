@@ -17,3 +17,11 @@ We can use the `{ ... }` notation if we need to run more than one command; f.i.:
 ```makefile
     @test -s .config/phpunit.xml || { echo "phpunit.xml file is missing, please take actions! Exiting..."; exit 1; }
 ```
+
+We can also do this before, f.i., includes an external file:
+
+```makefile
+ifneq ("$(wildcard .env)","")
+	include .env
+endif
+```
