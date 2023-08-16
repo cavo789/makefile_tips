@@ -25,3 +25,9 @@ ifneq ("$(wildcard .env)","")
 	include .env
 endif
 ```
+
+Of course, we can also keep it simple i.e. just use the `-` before the command to ignore errors so, below, if the file didn't exists, no error will be raised and the script will continue.
+
+```makefile
+-include .env
+```
